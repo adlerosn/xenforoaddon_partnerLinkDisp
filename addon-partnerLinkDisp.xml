@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="partnerLinkDisp" title="Partner Site Link Display by kiror" version_string="0.0" version_id="0" url="https://github.com/adlerosn/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="kiror_option_template_custom_partner_link"><![CDATA[<xen:require js="js/xenforo/options_censor.js" />
+
+<xen:controlunit label="{$preparedOption.title}" hint="{$preparedOption.hint}">
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<ul>
+			<xen:foreach loop="$choices" key="$counter" value="$choice">
+			<li>
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][url]" value="{$choice.url}" placeholder="URL" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][name]" value="{$choice.name}" placeholder="Name" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][descr]" value="{$choice.descr}" placeholder="Description" size="18" />
+			</li>
+			</xen:foreach>
+		
+			<li class="CensorWordOptionListener">
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][url]" value="" placeholder="URL" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][name]" value="" placeholder="Name" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][descr]" value="" placeholder="Description" size="18" />
+			</li>
+		</ul>
+		
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:controlunit>]]></template>
+  </admin_templates>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners/>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="partnersistesgrp" display_order="1" debug_only="0"/>
+    <option option_id="partnersitesarray" edit_format="callback" data_type="array" can_backup="1" validation_class="partnerLinkDisp_sharedStatic" validation_method="verifier_AdminCP_CustomLinksAdder">
+      <default_value>a:0:{}</default_value>
+      <edit_format_params>partnerLinkDisp_sharedStatic::render_AdminCP_CustomLinksAdder</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="partnersistesgrp" display_order="100"/>
+    </option>
+    <option option_id="partnersitesfooter" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="4"/>
+    </option>
+    <option option_id="partnersitesnavtabpub" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="1"/>
+    </option>
+    <option option_id="partnersitesnavtabvislft" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="2"/>
+    </option>
+    <option option_id="partnersitesnavtabvisrgt" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="3"/>
+    </option>
+    <option option_id="partnersitesnonetxt" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>No partner site at this moment.</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="99"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_group_partnersistesgrp" version_id="0" version_string="0.0"><![CDATA[Partner sites]]></phrase>
+    <phrase title="option_group_partnersistesgrp_description" version_id="0" version_string="0.0"><![CDATA[Options for the add-on that provides partner sites functionality.]]></phrase>
+    <phrase title="option_partnersitesarray" version_id="0" version_string="0.0"><![CDATA[Links for partner sites]]></phrase>
+    <phrase title="option_partnersitesarray_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesfooter" version_id="0" version_string="0.0"><![CDATA[Partner sites at footer]]></phrase>
+    <phrase title="option_partnersitesfooter_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesnavtabpub" version_id="0" version_string="0.0"><![CDATA[Partner sites at Public Navigation Tab]]></phrase>
+    <phrase title="option_partnersitesnavtabpub_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesnavtabvislft" version_id="0" version_string="0.0"><![CDATA[Partner sites at Visitor's Navigation Tab Leftmost]]></phrase>
+    <phrase title="option_partnersitesnavtabvislft_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesnavtabvisrgt" version_id="0" version_string="0.0"><![CDATA[Partner sites at Visitor's Navigation Tab Rightmost]]></phrase>
+    <phrase title="option_partnersitesnavtabvisrgt_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesnonetxt" version_id="0" version_string="0.0"><![CDATA[No partner text]]></phrase>
+    <phrase title="option_partnersitesnonetxt_explain" version_id="0" version_string="0.0"><![CDATA[<i>You may use HTML</i>]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="partner-sites" class="partnerLinkDisp_routeinterface" build_link="none"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="kiror_floating_partner_links" version_id="0" version_string="0.0"><![CDATA[<xen:title>Partners</xen:title>
+
+<xen:container var="$head.metaNoindex"><meta name="robots" content="noindex" /></xen:container>
+
+<xen:require css="chooser_overlay.css" />
+<xen:require css="style_chooser.css" />
+
+<div class="section styleChooser" data-overlayClass="chooserOverlay">
+
+	<h3 class="subHeading">Links for partner websites:</h3>
+	
+	<xen:if is="{$emptySiteList}">
+		<div class="secondaryContent">
+			{xen:raw $altTxt}
+		</div>
+	<xen:else />
+		<xen:foreach loop="$sites" value="$site">
+			<div class="secondaryContent">
+				<div><a href="{xen:raw $site.url}">{xen:raw $site.name}</a></div>
+				<div style="color: {xen:property mutedTextColor} ;">{xen:raw $site.descr}</div>
+			</div>
+		</xen:foreach>
+	</xen:if>
+
+	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase cancel}</a></div>
+</div>]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="footer" modification_key="addpartnerlinkhookatfooter" description="Add partner link hook at footer" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:hook name="footer_links">]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$xenOptions.partnersitesfooter}">
+<li>
+<a href="{xen:link 'partner-sites'}" class="OverlayTrigger" rel="nofollow">Partners</a>
+</li>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="navigation" modification_key="addpartnerlinkhookatnavbarpub" description="Add partner link hook at Public Navigation Bar" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<!-- no selection -->]]></find>
+      <replace><![CDATA[<xen:if is="{$xenOptions.partnersitesnavtabpub}">
+<li class="navTab PopupClosed">
+<a class="navLink OverlayTrigger" href="{xen:link 'partner-sites'}" rel="nofollow">
+Partners
+</a>
+</li>
+</xen:if>
+		$0]]></replace>
+    </modification>
+    <modification template="navigation_visitor_tab" modification_key="addpartnerlinkhookatnavtabvislft" description="Add partner link hook at Visitor's Navigation Bar Leftmost" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:hook name="navigation_visitor_tabs_start" />]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$xenOptions.partnersitesnavtabvislft}">
+<li class="navTab Popup PopupClosed">
+<a href="{xen:link 'partner-sites'}"
+   class="OverlayTrigger navLink accountPopup NoPopupGadget"
+   rel="nofollow">
+Partners
+</a>
+</li>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="navigation_visitor_tab" modification_key="addpartnerlinkhookatnavtabvisrgt" description="Add partner link hook at Visitor's Navigation Bar Rightmost" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:hook name="navigation_visitor_tabs_end" />]]></find>
+      <replace><![CDATA[<xen:if is="{$xenOptions.partnersitesnavtabvisrgt}">
+<li class="navTab Popup PopupClosed">
+<a href="{xen:link 'partner-sites'}"
+   class="OverlayTrigger navLink accountPopup NoPopupGadget"
+   rel="nofollow">
+Partners
+</a>
+</li>
+</xen:if>
+
+	$0]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
