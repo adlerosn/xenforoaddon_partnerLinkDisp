@@ -8,9 +8,10 @@ class partnerLinkDisp_sharedStatic
 		$choices = array();
 		foreach($t as $entry){
 			$choices[] = array(
-				'url'   => is_string($entry['url'])   ? $entry['url']   : '',
-				'name'  => is_string($entry['name'])  ? $entry['name']  : '',
-				'descr' => is_string($entry['descr']) ? $entry['descr'] : ''
+				'url'    => is_string($entry['url'])    ? $entry['url']    : '',
+				'imgurl' => is_string($entry['imgurl']) ? $entry['imgurl'] : '',
+				'name'   => is_string($entry['name'])   ? $entry['name']   : '',
+				'descr'  => is_string($entry['descr'])  ? $entry['descr']  : ''
 			);
 		}
 
@@ -35,18 +36,21 @@ class partnerLinkDisp_sharedStatic
 		$output = array();
 
 		foreach ($links AS $candidate){
-			if (!isset($candidate['url'])     ||
-				!isset($candidate['name'])    ||
-				!isset($candidate['descr'])   ||
-				strlen($candidate['url'])<=0  ||
-				strlen($candidate['name'])<=0 ||
+			if (!isset($candidate['url'])       ||
+				!isset($candidate['imgurl'])    ||
+				!isset($candidate['name'])      ||
+				!isset($candidate['descr'])     ||
+				strlen($candidate['url'])<=0    ||
+				strlen($candidate['imgurl'])<=0 ||
+				strlen($candidate['name'])<=0   ||
 				strlen($candidate['descr'])<=0){
 				continue;
 			}
 
-			$tmp = array('url'  =>$candidate['url'] ,
-						 'name' =>$candidate['name'],
-						 'descr'=>$candidate['descr']);
+			$tmp = array('url'   =>$candidate['url'] ,
+						 'imgurl'=>$candidate['imgurl'],
+						 'name'  =>$candidate['name'],
+						 'descr' =>$candidate['descr']);
 			if ($tmp && !in_array($tmp,$output)){
 				$output[] = $tmp;
 			}

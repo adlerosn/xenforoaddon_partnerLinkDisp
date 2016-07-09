@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="partnerLinkDisp" title="Partner Site Link Display by kiror" version_string="0.0" version_id="0" url="https://github.com/adlerosn/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="partnerLinkDisp" title="[kiror] Partner Site Link Display" version_string="0.2" version_id="2" url="https://github.com/adlerosn/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -12,16 +12,18 @@
 		<ul>
 			<xen:foreach loop="$choices" key="$counter" value="$choice">
 			<li>
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][url]" value="{$choice.url}" placeholder="URL" size="18" />
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][name]" value="{$choice.name}" placeholder="Name" size="18" />
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][descr]" value="{$choice.descr}" placeholder="Description" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][url]" value="{$choice.url}" placeholder="URL" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][imgurl]" value="{$choice.imgurl}" placeholder="Image URL" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][name]" value="{$choice.name}" placeholder="Name" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$counter}][descr]" value="{$choice.descr}" placeholder="Description" size="50" />
 			</li>
 			</xen:foreach>
 		
 			<li class="CensorWordOptionListener">
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][url]" value="" placeholder="URL" size="18" />
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][name]" value="" placeholder="Name" size="18" />
-				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][descr]" value="" placeholder="Description" size="18" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][url]" value="" placeholder="URL" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][imgurl]" value="" placeholder="Image URL" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][name]" value="" placeholder="Name" size="50" />
+				<xen:textbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$nextCounter}][descr]" value="" placeholder="Description" size="50" />
 			</li>
 		</ul>
 		
@@ -37,12 +39,18 @@
   <email_templates/>
   <email_template_modifications/>
   <optiongroups>
-    <group group_id="partnersistesgrp" display_order="1" debug_only="0"/>
+    <group group_id="partnersistesgrp" display_order="7" debug_only="0"/>
     <option option_id="partnersitesarray" edit_format="callback" data_type="array" can_backup="1" validation_class="partnerLinkDisp_sharedStatic" validation_method="verifier_AdminCP_CustomLinksAdder">
       <default_value>a:0:{}</default_value>
       <edit_format_params>partnerLinkDisp_sharedStatic::render_AdminCP_CustomLinksAdder</edit_format_params>
       <sub_options>*</sub_options>
       <relation group_id="partnersistesgrp" display_order="100"/>
+    </option>
+    <option option_id="partnersitesbtwfooterandcopyright" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="partnersistesgrp" display_order="5"/>
     </option>
     <option option_id="partnersitesfooter" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value></default_value>
@@ -81,10 +89,12 @@
     <interface_groups/>
   </permissions>
   <phrases>
-    <phrase title="option_group_partnersistesgrp" version_id="0" version_string="0.0"><![CDATA[Partner sites]]></phrase>
+    <phrase title="option_group_partnersistesgrp" version_id="2" version_string="0.2"><![CDATA[[kiror] Partner sites]]></phrase>
     <phrase title="option_group_partnersistesgrp_description" version_id="0" version_string="0.0"><![CDATA[Options for the add-on that provides partner sites functionality.]]></phrase>
     <phrase title="option_partnersitesarray" version_id="0" version_string="0.0"><![CDATA[Links for partner sites]]></phrase>
     <phrase title="option_partnersitesarray_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
+    <phrase title="option_partnersitesbtwfooterandcopyright" version_id="0" version_string="0.0"><![CDATA[Partner sites between footer and copyright]]></phrase>
+    <phrase title="option_partnersitesbtwfooterandcopyright_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
     <phrase title="option_partnersitesfooter" version_id="0" version_string="0.0"><![CDATA[Partner sites at footer]]></phrase>
     <phrase title="option_partnersitesfooter_explain" version_id="0" version_string="0.0"><![CDATA[]]></phrase>
     <phrase title="option_partnersitesnavtabpub" version_id="0" version_string="0.0"><![CDATA[Partner sites at Public Navigation Tab]]></phrase>
@@ -119,12 +129,23 @@
 			{xen:raw $altTxt}
 		</div>
 	<xen:else />
-		<xen:foreach loop="$sites" value="$site">
-			<div class="secondaryContent">
-				<div><a href="{xen:raw $site.url}">{xen:raw $site.name}</a></div>
-				<div style="color: {xen:property mutedTextColor} ;">{xen:raw $site.descr}</div>
-			</div>
-		</xen:foreach>
+		<ol class="primaryContent chooserColumns oneColumns overlayScroll">
+	
+			<xen:foreach loop="$sites" value="$site">
+				<li>
+					<a href="{xen:raw $site.url}">
+						<span class="icon" style="background-image: url('{xen:raw $site.imgurl}');
+									  background-size: contain;
+									  background-repeat: no-repeat;
+									  background-position: center center;
+									  background-color: {xen:property contentBackground} ;"><span></span></span>
+						<span class="title">{xen:raw $site.name}</span>
+						<span class="description">{xen:raw $site.descr}</span>
+					</a>
+				</li>
+			</xen:foreach>
+	
+		</ol>
 	</xen:if>
 
 	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase cancel}</a></div>
@@ -138,6 +159,20 @@
 <li>
 <a href="{xen:link 'partner-sites'}" class="OverlayTrigger" rel="nofollow">Partners</a>
 </li>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="footer" modification_key="addpartnerlinkhookatfooterbeforelegal" description="Add partner link hook between footer and copyright" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<div class="footerLegal">
+	<div class="pageWidth">
+		<div class="pageContent">]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$xenOptions.partnersitesbtwfooterandcopyright}">
+<div style="text-align: left;">
+Partner sites:
+<xen:foreach loop="$xenOptions.partnersitesarray" value="$site">
+&nbsp;<a href="{xen:raw $site.url}">{xen:raw $site.name}</a>
+</xen:foreach>
+</div>
 </xen:if>]]></replace>
     </modification>
     <modification template="navigation" modification_key="addpartnerlinkhookatnavbarpub" description="Add partner link hook at Public Navigation Bar" execution_order="10" enabled="1" action="str_replace">
